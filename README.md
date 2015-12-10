@@ -1,6 +1,6 @@
 ### Build
 ```go
-go buil
+go build
 ```
 
 ### Run
