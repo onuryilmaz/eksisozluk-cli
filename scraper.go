@@ -1,14 +1,14 @@
 package main
 
 import (
+	"net/http"
+	"net/url"
+	"strconv"
+	"strings"
 
 	"github.com/yhat/scrape"
 	"golang.org/x/net/html"
-	"net/http"
-	"strings"
 	"golang.org/x/net/html/atom"
-	"strconv"
-
 )
 
 var scraper Scraper
@@ -20,7 +20,6 @@ type Scraper struct {
 	entryListMatcher func(n *html.Node) bool
 	topicListMatcher func(n *html.Node) bool
 }
-
 
 func init() {
 
@@ -44,13 +43,13 @@ func init() {
 		return strings.Contains(scrape.Attr(n, "class"), "topic-list")
 	}
 
-	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher,topicListMatcher}
+	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher, topicListMatcher}
 }
 
 func (s Scraper) findEntries(text string) []entry {
 	entryList := make([]entry, 0)
 
-	resp, err := http.Get("https://eksisozluk.com/?q=" + text)
+	resp, err := http.Get("https://eksisozluk.com/?q=" + url.QueryEscape(text))
 	if err != nil {
 		panic(err)
 	}
@@ -69,10 +68,10 @@ func (s Scraper) findEntries(text string) []entry {
 		entry := entry{}
 		entry.Text = scrape.Text(scrappedEntry)
 
-		if (authorCheck) {
+		if authorCheck {
 			entry.Author = scrape.Text(authorNode)
 		}
-		if (dateCheck) {
+		if dateCheck {
 			idDate := scrape.Text(dateNode)
 			splitted := strings.SplitAfterN(idDate, " ", 2)
 			entry.Id = strings.TrimSpace(splitted[0])
@@ -109,7 +108,7 @@ func (s Scraper) findTopics() []topic {
 		topic.Title = strings.TrimSpace(titleAndCount[0:countIndex])
 		countString := titleAndCount[countIndex:]
 
-		topicCountInt,_ := strconv.Atoi(strings.TrimSpace(countString))
+		topicCountInt, _ := strconv.Atoi(strings.TrimSpace(countString))
 		topic.Count = int64(topicCountInt)
 
 		topicList = append(topicList, topic)
