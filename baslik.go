@@ -9,16 +9,16 @@ import (
 
 // ConfigTestCommand is a Command implementation that is used to
 // verify config files
-type ConfigTestCommand struct {
+type BaslikCommand struct {
 	Ui cli.Ui
 }
 
-func (c *ConfigTestCommand) Help() string {
+func (c *BaslikCommand) Help() string {
 	helpText := "Usage: ...."
 	return strings.TrimSpace(helpText)
 }
 
-func (c *ConfigTestCommand) Run(args []string) int {
+func (c *BaslikCommand) Run(args []string) int {
 
 	if (len(args) < 1) {
 		return 1
@@ -33,6 +33,6 @@ func (c *ConfigTestCommand) Run(args []string) int {
 	return 0
 }
 
-func (c *ConfigTestCommand) Synopsis() string {
+func (c *BaslikCommand) Synopsis() string {
 	return "baslik adi ile arama"
 }

@@ -6,6 +6,9 @@ import (
 	"golang.org/x/net/html"
 	"net/http"
 	"strings"
+	"golang.org/x/net/html/atom"
+	"strconv"
+
 )
 
 var scraper Scraper
@@ -15,6 +18,7 @@ type Scraper struct {
 	authorMatcher    func(n *html.Node) bool
 	dateMatcher      func(n *html.Node) bool
 	entryListMatcher func(n *html.Node) bool
+	topicListMatcher func(n *html.Node) bool
 }
 
 
@@ -23,7 +27,6 @@ func init() {
 	entryListMatcher := func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "id"), "entry-list")
 	}
-
 
 	entryMatcher := func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "class"), "content")
@@ -37,7 +40,11 @@ func init() {
 		return strings.Contains(scrape.Attr(n, "class"), "entry-date")
 	}
 
-	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher}
+	topicListMatcher := func(n *html.Node) bool {
+		return strings.Contains(scrape.Attr(n, "class"), "topic-list")
+	}
+
+	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher,topicListMatcher}
 }
 
 func (s Scraper) findEntries(text string) []entry {
@@ -75,4 +82,38 @@ func (s Scraper) findEntries(text string) []entry {
 	}
 
 	return entryList
+}
+
+func (s Scraper) findTopics() []topic {
+	topicList := make([]topic, 0)
+
+	resp, err := http.Get("https://eksisozluk.com/basliklar/populer")
+	if err != nil {
+		panic(err)
+	}
+	root, err := html.Parse(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	topicListNode, _ := scrape.Find(root, s.topicListMatcher)
+
+	topicLists := scrape.FindAll(topicListNode, scrape.ByTag(atom.Li))
+	for _, topicNode := range topicLists {
+
+		topic := topic{}
+		titleAndCount := scrape.Text(topicNode)
+
+		countIndex := strings.LastIndex(titleAndCount, " ")
+
+		topic.Title = strings.TrimSpace(titleAndCount[0:countIndex])
+		countString := titleAndCount[countIndex:]
+
+		topicCountInt,_ := strconv.Atoi(strings.TrimSpace(countString))
+		topic.Count = int64(topicCountInt)
+
+		topicList = append(topicList, topic)
+	}
+
+	return topicList
 }

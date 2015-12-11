@@ -6,3 +6,8 @@ type entry struct {
 	Date   string
 	Id     string
 }
+
+type topic struct {
+	Title string
+	Count int64
+}

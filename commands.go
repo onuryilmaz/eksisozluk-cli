@@ -16,7 +16,12 @@ func init() {
 
 
 		"baslik": func() (cli.Command, error) {
-			return &ConfigTestCommand{
+			return &BaslikCommand{
+				Ui: ui,
+			}, nil},
+
+		"gundem": func() (cli.Command, error) {
+			return &GundemCommand{
 				Ui: ui,
 			}, nil},
 

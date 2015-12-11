@@ -13,3 +13,11 @@ func WriteEntryList(entryList []entry) {
 		fmt.Println(e.Text)
 	}
 }
+
+func WriteTopicList(topicList []topic) {
+
+	for _, t := range topicList {
+
+		fmt.Printf("%s [%d] \n", t.Title, t.Count)
+	}
+}
