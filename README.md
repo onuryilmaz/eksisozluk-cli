@@ -13,6 +13,3 @@ eksisozluk-cli baslik "golang"
 - [ ] Pagination, limit
 - [ ] DEBE
 - [ ] JSON, CSV export
-
-### Problem
-* Gündem count problemi
