@@ -4,9 +4,20 @@ go build
 ```
 
 ### Run
+
+Başlık ile arama:
 ```go
 eksisozluk-cli baslik "golang"
+```
+
+Gündem Başlıkları:
+```go
 eksisozluk-cli gundem
+```
+
+DEBE:
+```go
+eksisozluk-cli debe
 ```
 
 ### TODO
