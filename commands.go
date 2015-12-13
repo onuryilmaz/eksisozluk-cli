@@ -14,16 +14,22 @@ func init() {
 
 	commands = map[string]cli.CommandFactory{
 
-
 		"baslik": func() (cli.Command, error) {
 			return &BaslikCommand{
 				Ui: ui,
-			}, nil},
+			}, nil
+		},
 
 		"gundem": func() (cli.Command, error) {
 			return &GundemCommand{
 				Ui: ui,
-			}, nil},
+			}, nil
+		},
 
+		"debe": func() (cli.Command, error) {
+			return &DebeCommand{
+				Ui: ui,
+			}, nil
+		},
 	}
 }

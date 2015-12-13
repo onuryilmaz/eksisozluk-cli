@@ -19,6 +19,8 @@ type Scraper struct {
 	dateMatcher      func(n *html.Node) bool
 	entryListMatcher func(n *html.Node) bool
 	topicListMatcher func(n *html.Node) bool
+	indexListMatcher func(n *html.Node) bool
+	contentMatcher   func(n *html.Node) bool
 }
 
 func init() {
@@ -43,13 +45,23 @@ func init() {
 		return strings.Contains(scrape.Attr(n, "class"), "topic-list")
 	}
 
-	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher, topicListMatcher}
+	indexListMatcher := func(n *html.Node) bool {
+		return strings.Contains(scrape.Attr(n, "id"), "index-section")
+	}
+
+	contentMatcher := func(n *html.Node) bool {
+		return strings.Contains(scrape.Attr(n, "id"), "content-body")
+	}
+
+	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher, topicListMatcher, indexListMatcher, contentMatcher}
 }
 
-func (s Scraper) findEntries(text string) []entry {
-	entryList := make([]entry, 0)
+func (s Scraper) GetEntries(text string) []Entry {
+	return s.getEntries("https://eksisozluk.com/?q=" + url.QueryEscape(text))
+}
+func (s Scraper) getEntries(eksiURL string) []Entry {
 
-	resp, err := http.Get("https://eksisozluk.com/?q=" + url.QueryEscape(text))
+	resp, err := http.Get(eksiURL)
 	if err != nil {
 		panic(err)
 	}
@@ -58,14 +70,24 @@ func (s Scraper) findEntries(text string) []entry {
 		panic(err)
 	}
 
-	entryListNode, _ := scrape.Find(root, s.entryListMatcher)
+	entryList := make([]Entry, 0)
+
+	entryListNode, found := scrape.Find(root, s.entryListMatcher)
+
+	if found == false {
+		return entryList
+	}
 
 	scrapedEntries := scrape.FindAll(entryListNode, s.entryMatcher)
+
+	if len(scrapedEntries) == 0 {
+		return entryList
+	}
 	for _, scrappedEntry := range scrapedEntries {
 		authorNode, authorCheck := scrape.Find(scrappedEntry.Parent, s.authorMatcher)
 		dateNode, dateCheck := scrape.Find(scrappedEntry.Parent, s.dateMatcher)
 
-		entry := entry{}
+		entry := Entry{}
 		entry.Text = scrape.Text(scrappedEntry)
 
 		if authorCheck {
@@ -83,8 +105,7 @@ func (s Scraper) findEntries(text string) []entry {
 	return entryList
 }
 
-func (s Scraper) findTopics() []topic {
-	topicList := make([]topic, 0)
+func (s Scraper) GetPopularTopics() []Topic {
 
 	resp, err := http.Get("https://eksisozluk.com/basliklar/populer")
 	if err != nil {
@@ -95,12 +116,24 @@ func (s Scraper) findTopics() []topic {
 		panic(err)
 	}
 
-	topicListNode, _ := scrape.Find(root, s.topicListMatcher)
+	topicListNode, _ := scrape.Find(root, s.indexListMatcher)
+
+	return s.getTopics(topicListNode)
+
+}
+
+func (s Scraper) getTopics(node *html.Node) []Topic {
+	topicList := make([]Topic, 0)
+
+	topicListNode, _ := scrape.Find(node, s.topicListMatcher)
 
 	topicLists := scrape.FindAll(topicListNode, scrape.ByTag(atom.Li))
 	for _, topicNode := range topicLists {
 
-		topic := topic{}
+		topic := Topic{}
+		topicLink, _ := scrape.Find(topicNode, scrape.ByTag(atom.A))
+		topic.Link = "https://eksisozluk.com" + scrape.Attr(topicLink, "href")
+
 		titleAndCount := scrape.Text(topicNode)
 
 		countIndex := strings.LastIndex(titleAndCount, " ")
@@ -115,4 +148,32 @@ func (s Scraper) findTopics() []topic {
 	}
 
 	return topicList
+}
+
+func (s Scraper) GetDEBE() []Debe {
+
+	resp, err := http.Get("https://eksisozluk.com/debe")
+	if err != nil {
+		panic(err)
+	}
+	root, err := html.Parse(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	topicListNode, _ := scrape.Find(root, s.contentMatcher)
+
+	debeTopics := s.getTopics(topicListNode)
+
+	debeList := make([]Debe, 0)
+
+	for _, t := range debeTopics {
+		currentDebe := Debe{}
+		currentDebe.DebeTopic = t
+		entryList := s.getEntries(t.Link)
+		currentDebe.DebeEntry = entryList[0]
+		debeList = append(debeList, currentDebe)
+	}
+
+	return debeList
 }

@@ -1,10 +1,8 @@
 package main
 
-
 import (
-	"strings"
 	"github.com/mitchellh/cli"
-
+	"strings"
 )
 
 type GundemCommand struct {
@@ -18,8 +16,8 @@ func (c *GundemCommand) Help() string {
 
 func (c *GundemCommand) Run(args []string) int {
 
-topicList :=	scraper.findTopics()
-WriteTopicList(topicList)
+	topicList := scraper.GetPopularTopics()
+	WriteTopicList(topicList)
 	return 0
 }
 

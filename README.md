@@ -10,7 +10,7 @@ eksisozluk-cli gundem
 ```
 
 ### TODO
-- [ ] Gündem, static & live with limitation like top 10 & coloring
-- [ ] Başlıklar için Pagination, limit, "şükela mod"
-- [ ] DEBE
+- [ ] Gündem: static & live with limitation like top 10 & coloring
+- [ ] Başlık: Pagination, limit, "şükela mod"
+- [ ] Debe: Limit
 - [ ] JSON, CSV export

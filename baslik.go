@@ -1,10 +1,8 @@
 package main
 
-
 import (
-	"strings"
 	"github.com/mitchellh/cli"
-
+	"strings"
 )
 
 // ConfigTestCommand is a Command implementation that is used to
@@ -20,14 +18,13 @@ func (c *BaslikCommand) Help() string {
 
 func (c *BaslikCommand) Run(args []string) int {
 
-	if (len(args) < 1) {
+	if len(args) < 1 {
 		return 1
 	}
 	baslik := args[0]
-	println("Looking for: " + baslik + "...")
-	sanitizedText := strings.Replace(baslik, " ", "%20%", -1)
+	println("Looking for: " + baslik + " ...")
 
-	entryList := scraper.findEntries(sanitizedText)
+	entryList := scraper.GetEntries(baslik)
 	WriteEntryList(entryList)
 
 	return 0

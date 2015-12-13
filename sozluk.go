@@ -9,8 +9,6 @@ import (
 
 func main() {
 
-
-
 	c := cli.NewCLI("app", "1.0.0")
 	c.Args = os.Args[1:]
 	c.Commands = commands
@@ -22,4 +20,3 @@ func main() {
 
 	os.Exit(exitStatus)
 }
-
