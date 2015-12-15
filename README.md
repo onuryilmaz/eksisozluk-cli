@@ -28,3 +28,7 @@ eksisozluk-cli debe
 - [ ] Başlık: Pagination, limit, "şükela mod"
 - [ ] Debe: Limit
 - [ ] JSON, CSV export
+
+### Bilgi
+* Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
+* [Ekşi Sözlük Kullanım Koşulları](https://eksisozluk.com/eksi-sozluk-kullanim-kosullari--2602576)
