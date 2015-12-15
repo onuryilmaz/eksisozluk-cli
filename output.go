@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"sort"
+
 	"github.com/fatih/color"
 )
 
@@ -17,10 +19,27 @@ func WriteEntryList(entryList []Entry) {
 }
 
 func WriteTopicList(topicList []Topic) {
+	sortedList := byCount(topicList)
+	sort.Sort(sortedList)
 
-	for _, t := range topicList {
+	// topics with count higher than mean will be printed in color
+	_, idx := sortedList.Mean()
+	groupSize := idx / (len(gundemColors) - 1)
+	current := 0
 
-		fmt.Printf("%s [%d] \n", t.Title, t.Count)
+	for i, t := range topicList {
+		var prefix, suffix string
+		if i <= idx {
+			prefix = gundemColors[current]
+			suffix = colorEnd
+
+			// color needs to change after first element and after "groupSize" elements
+			if current < len(gundemColors)-1 && (i == 0 || i%groupSize == 0) {
+				current++
+			}
+		}
+
+		fmt.Printf("%s%s [%d]%s\n", prefix, t.Title, t.Count, suffix)
 	}
 }
 
@@ -37,3 +56,13 @@ func WriteDebeList(debeList []Debe) {
 		fmt.Println(d.DebeEntry.Text)
 	}
 }
+
+var gundemColors = []string{
+	"\033[38;5;196m",
+	"\033[38;5;202m",
+	"\033[38;5;208m",
+	"\033[38;5;214m",
+	"\033[38;5;220m",
+}
+
+var colorEnd = "\033[0m"
