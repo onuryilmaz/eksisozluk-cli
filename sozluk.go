@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/mitchellh/cli"
-	"os"
 )
 
 func main() {
