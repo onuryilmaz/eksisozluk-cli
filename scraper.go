@@ -5,7 +5,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-
 	"github.com/yhat/scrape"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -57,7 +56,15 @@ func init() {
 }
 
 func (s Scraper) GetEntries(text string) []Entry {
-	return s.getEntries("https://eksisozluk.com/?q=" + url.QueryEscape(text))
+
+	resp, err := http.Get("https://eksisozluk.com/?q=" + url.QueryEscape(text))
+	if err != nil {
+		panic(err)
+	}
+
+	redirectedURL := resp.Request.URL.String()
+
+	return s.getEntries(redirectedURL)
 }
 func (s Scraper) getEntries(eksiURL string) []Entry {
 
