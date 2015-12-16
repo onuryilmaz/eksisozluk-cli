@@ -24,7 +24,7 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI]
 ```
 
 ### TODO
-- [ ] Gündem: live; coloring (Coloring: error when limit < 15)
+- [ ] Gündem: live; coloring for windows
 - [ ] Başlık: "şükela mod"
 - [ ] JSON, CSV export
 - [ ] Logger

@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	"github.com/fatih/color"
+	"github.com/mattn/go-colorable"
 )
 
 func WriteEntryList(entryList []Entry) {
@@ -30,6 +31,7 @@ func WriteTopicList(topicList []Topic) {
 	}
 
 	current := 0
+	writer := colorable.NewColorableStdout()
 
 	for i, t := range topicList {
 		var prefix, suffix string
@@ -43,7 +45,7 @@ func WriteTopicList(topicList []Topic) {
 			}
 		}
 
-		fmt.Printf("%s%s [%d]%s\n", prefix, t.Title, t.Count, suffix)
+		fmt.Fprintf(writer, "%s%s [%d]%s\n", prefix, t.Title, t.Count, suffix)
 	}
 }
 
