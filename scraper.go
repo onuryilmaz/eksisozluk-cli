@@ -73,6 +73,11 @@ func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 	for parameter.Limit > len(entryList) {
 
 		paginationURL := redirectedURL + "?p=" + strconv.Itoa(startPage)
+
+		if parameter.Sukela {
+			paginationURL = paginationURL + "&a=nice"
+		}
+
 		additionalEntryList := s.getEntries(paginationURL)
 		if len(additionalEntryList) == 0 {
 			break

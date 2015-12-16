@@ -10,7 +10,7 @@ go build
 
 Başlık ile arama:
 ```go
-eksisozluk-cli baslik "golang" [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI]
+eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI]
 ```
 
 Gündem Başlıkları:
@@ -25,7 +25,6 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI]
 
 ### TODO
 - [ ] Gündem: live; coloring for windows
-- [ ] Başlık: "şükela mod"
 - [ ] JSON, CSV export
 - [ ] Logger
 
