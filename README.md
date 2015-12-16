@@ -25,7 +25,10 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 
 ### TODO
 - Gündem: live; coloring for windows
-- Documentation (Readme, Animated GIF, Godoc)
+- Documentation 
+ - Readme with detailed usage & Animated GIFs
+ - Godoc
+ - Github Pages
 
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
