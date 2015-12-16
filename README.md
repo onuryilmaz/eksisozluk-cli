@@ -28,6 +28,7 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI]
 - [ ] Başlık: "şükela mod"
 - [ ] JSON, CSV export
 - [ ] Logger
+- [ ] Travis multiple collobarator release
 
 
 ### Bilgi
