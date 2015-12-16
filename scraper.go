@@ -135,9 +135,38 @@ func (s Scraper) getEntries(eksiURL string) []Entry {
 	return entryList
 }
 
-func (s Scraper) GetPopularTopics() []Topic {
+func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
 
-	resp, err := http.Get("https://eksisozluk.com/basliklar/populer")
+	baseURL := "https://eksisozluk.com/basliklar/populer"
+
+	topicList := make([]Topic, 0)
+	startPage := parameter.PageNumber
+
+	for parameter.Limit > len(topicList) {
+		paginationURL := baseURL + "?p=" + strconv.Itoa(startPage)
+		additionalTopicList := s.getTopics(paginationURL)
+		if len(additionalTopicList) == 0 {
+			break
+		}
+		if len(topicList)+len(additionalTopicList) > parameter.Limit {
+			topicList = append(topicList, additionalTopicList[0:(parameter.Limit-len(topicList))]...)
+		} else {
+			topicList = append(topicList, additionalTopicList...)
+		}
+
+		startPage = startPage + 1
+	}
+
+	return topicList
+
+}
+
+func (s Scraper) getTopics(topicURL string) []Topic {
+
+	fmt.Println("Checking URL: " + topicURL)
+	topicList := make([]Topic, 0)
+
+	resp, err := http.Get(topicURL)
 	if err != nil {
 		panic(err)
 	}
@@ -146,16 +175,9 @@ func (s Scraper) GetPopularTopics() []Topic {
 		panic(err)
 	}
 
-	topicListNode, _ := scrape.Find(root, s.indexListMatcher)
+	contentNode, _ := scrape.Find(root, s.contentMatcher)
 
-	return s.getTopics(topicListNode)
-
-}
-
-func (s Scraper) getTopics(node *html.Node) []Topic {
-	topicList := make([]Topic, 0)
-
-	topicListNode, _ := scrape.Find(node, s.topicListMatcher)
+	topicListNode, _ := scrape.Find(contentNode, s.topicListMatcher)
 
 	topicLists := scrape.FindAll(topicListNode, scrape.ByTag(atom.Li))
 	for _, topicNode := range topicLists {
@@ -182,18 +204,7 @@ func (s Scraper) getTopics(node *html.Node) []Topic {
 
 func (s Scraper) GetDEBE() []Debe {
 
-	resp, err := http.Get("https://eksisozluk.com/debe")
-	if err != nil {
-		panic(err)
-	}
-	root, err := html.Parse(resp.Body)
-	if err != nil {
-		panic(err)
-	}
-
-	topicListNode, _ := scrape.Find(root, s.contentMatcher)
-
-	debeTopics := s.getTopics(topicListNode)
+	debeTopics := s.getTopics("https://eksisozluk.com/debe")
 
 	debeList := make([]Debe, 0)
 
