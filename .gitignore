@@ -73,6 +73,7 @@ _testmain.go
 
 # Created by .ignore support plugin (hsz.mobi)
 
-*.json
 
 *.log
+
+vendor
