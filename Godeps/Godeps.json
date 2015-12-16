@@ -1,0 +1,40 @@
+{
+	"ImportPath": "github.com/onuryilmaz/eksisozluk-cli",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/fatih/color",
+			"Comment": "v0.1-12-g9aae6aa",
+			"Rev": "9aae6aaa22315390f03959adca2c4d395b02fcef"
+		},
+		{
+			"ImportPath": "github.com/jfrazelle/go/canonical/json",
+			"Comment": "v1.5.1-1-1-gbaf439e",
+			"Rev": "baf439e6c161bd2106346fc8022b74ac2444e311"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Rev": "3dac7b4f76f6e17fb39b768b89e3783d16e237fe"
+		},
+		{
+			"ImportPath": "github.com/mitchellh/cli",
+			"Rev": "8102d0ed5ea2709ade1243798785888175f6e415"
+		},
+		{
+			"ImportPath": "github.com/yhat/scrape",
+			"Rev": "47d070048ae58bf228dfdfcfaf1d1c6abc00620e"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "548f7bf20c8aae87fecd9aa09cc89065451e6271"
+		},
+		{
+			"ImportPath": "gopkg.in/natefinch/lumberjack.v2",
+			"Comment": "v1.0-18-g600ceb4",
+			"Rev": "600ceb4523e5b7ff745f91083c8a023c2bf73af5"
+		}
+	]
+}

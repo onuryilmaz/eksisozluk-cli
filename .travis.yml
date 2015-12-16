@@ -6,6 +6,8 @@ env:
 before_install:
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
+  - go get github.com/tools/godep
+  - godep restore
 after_success:
   - gox -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
   - ghr --username onuryilmaz --token $GITHUB_TOKEN --delete --prerelease --debug pre-release dist/

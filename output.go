@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/docker/docker/vendor/src/github.com/jfrazelle/go/canonical/json"
 	"github.com/fatih/color"
+	"github.com/jfrazelle/go/canonical/json"
 	"github.com/mattn/go-colorable"
 	"io/ioutil"
 	"log"
