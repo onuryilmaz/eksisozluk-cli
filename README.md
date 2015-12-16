@@ -27,6 +27,7 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI]
 - [ ] Gündem: live; coloring for windows
 - [ ] JSON, CSV export
 - [ ] Logger
+- [ ] Travis multiple collobarator release
 
 
 ### Bilgi
