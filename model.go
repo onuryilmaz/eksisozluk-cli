@@ -1,6 +1,11 @@
 package main
 
-import "sort"
+import (
+	"flag"
+	"fmt"
+	"github.com/mitchellh/cli"
+	"sort"
+)
 
 type Entry struct {
 	Text   string
@@ -18,6 +23,10 @@ type Topic struct {
 type Debe struct {
 	DebeTopic Topic
 	DebeEntry Entry
+}
+type Parameter struct {
+	PageNumber int
+	Limit      int
 }
 
 type byCount []Topic
@@ -49,4 +58,18 @@ func (a byCount) Mean() (value int64, index int) {
 	}
 
 	return value, index
+}
+
+func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter Parameter) {
+	cmdFlags := flag.NewFlagSet("parameter", flag.ContinueOnError)
+	cmdFlags.Usage = func() { ui.Output(cli.Help()) }
+	var pageNumber, limit int
+	cmdFlags.IntVar(&pageNumber, "page", 1, "Sayfa numarasi")
+	cmdFlags.IntVar(&limit, "limit", 10, "Limit")
+	if err := cmdFlags.Parse(args); err != nil {
+		fmt.Println("Error in parameter handling")
+	}
+
+	return Parameter{pageNumber, limit}
+
 }

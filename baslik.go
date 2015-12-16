@@ -24,7 +24,11 @@ func (c *BaslikCommand) Run(args []string) int {
 	baslik := args[0]
 	println("Looking for: " + baslik + " ...")
 
-	entryList := scraper.GetEntries(baslik)
+	parameter := Parameter{}
+	if len(args) > 1 {
+		parameter = ParameterFlagHandler(args[1:], c.Ui, c)
+	}
+	entryList := scraper.GetEntries(baslik, parameter)
 	WriteEntryList(entryList)
 
 	return 0

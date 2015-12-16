@@ -10,7 +10,7 @@ go build
 
 Başlık ile arama:
 ```go
-eksisozluk-cli baslik "golang"
+eksisozluk-cli baslik "golang" [--page=PAGE_NUMBER] [--limit=ENTRY_LIMIT]
 ```
 
 Gündem Başlıkları:
@@ -25,6 +25,7 @@ eksisozluk-cli debe
 
 ### TODO
 - [ ] Gündem: static & live with limitation like top 10 & coloring
-- [ ] Başlık: Pagination, limit, "şükela mod"
+- [ ] Başlık: "şükela mod"
 - [ ] Debe: Limit
 - [ ] JSON, CSV export
+- [ ] Logger

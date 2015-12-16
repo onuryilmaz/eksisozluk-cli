@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"github.com/yhat/scrape"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"github.com/yhat/scrape"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 )
 
 var scraper Scraper
@@ -55,19 +56,41 @@ func init() {
 	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher, topicListMatcher, indexListMatcher, contentMatcher}
 }
 
-func (s Scraper) GetEntries(text string) []Entry {
+func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 
-	resp, err := http.Get("https://eksisozluk.com/?q=" + url.QueryEscape(text))
+	baseURL := "https://eksisozluk.com/?q=" + url.QueryEscape(text)
+
+	resp, err := http.Get(baseURL)
 	if err != nil {
 		panic(err)
 	}
 
 	redirectedURL := resp.Request.URL.String()
 
-	return s.getEntries(redirectedURL)
+	entryList := make([]Entry, 0)
+	startPage := parameter.PageNumber
+
+	for parameter.Limit > len(entryList) {
+
+		paginationURL := redirectedURL + "?p=" + strconv.Itoa(startPage)
+		additionalEntryList := s.getEntries(paginationURL)
+		if len(additionalEntryList) == 0 {
+			break
+		}
+		if len(entryList)+len(additionalEntryList) > parameter.Limit {
+			entryList = append(entryList, additionalEntryList[0:(parameter.Limit-len(entryList))]...)
+		} else {
+			entryList = append(entryList, additionalEntryList...)
+		}
+
+		startPage = startPage + 1
+	}
+
+	return entryList
 }
 func (s Scraper) getEntries(eksiURL string) []Entry {
 
+	fmt.Println("URL to check: " + eksiURL)
 	resp, err := http.Get(eksiURL)
 	if err != nil {
 		panic(err)
