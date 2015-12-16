@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-// ConfigTestCommand is a Command implementation that is used to
-// verify config files
 type BaslikCommand struct {
 	Ui cli.Ui
 }
@@ -30,7 +28,8 @@ func (c *BaslikCommand) Run(args []string) int {
 		parameter.Limit = 10
 	}
 	entryList := scraper.GetEntries(baslik, parameter)
-	WriteEntryList(entryList)
+
+	WriteEntryList(entryList, parameter, baslik)
 
 	return 0
 }

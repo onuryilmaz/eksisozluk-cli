@@ -6,7 +6,6 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-// Commands is the mapping of all the available Consul commands.
 var commands map[string]cli.CommandFactory
 
 func init() {

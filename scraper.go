@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"github.com/yhat/scrape"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -78,7 +78,7 @@ func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 			paginationURL = paginationURL + "&a=nice"
 		}
 
-		additionalEntryList := s.getEntries(paginationURL)
+		additionalEntryList := getEntries(s, paginationURL)
 		if len(additionalEntryList) == 0 {
 			break
 		}
@@ -93,9 +93,57 @@ func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 
 	return entryList
 }
-func (s Scraper) getEntries(eksiURL string) []Entry {
 
-	fmt.Println("URL to check: " + eksiURL)
+func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
+
+	baseURL := "https://eksisozluk.com/basliklar/populer"
+
+	topicList := make([]Topic, 0)
+	startPage := parameter.PageNumber
+
+	for parameter.Limit > len(topicList) {
+		paginationURL := baseURL + "?p=" + strconv.Itoa(startPage)
+		additionalTopicList := getTopics(s, paginationURL)
+		if len(additionalTopicList) == 0 {
+			break
+		}
+		if len(topicList)+len(additionalTopicList) > parameter.Limit {
+			topicList = append(topicList, additionalTopicList[0:(parameter.Limit-len(topicList))]...)
+		} else {
+			topicList = append(topicList, additionalTopicList...)
+		}
+
+		startPage = startPage + 1
+	}
+
+	return topicList
+
+}
+
+func (s Scraper) GetDEBE(parameter Parameter) []Debe {
+
+	debeTopics := getTopics(s, "https://eksisozluk.com/debe")
+
+	debeList := make([]Debe, 0)
+
+	for _, t := range debeTopics {
+		if len(debeList) >= parameter.Limit {
+			break
+		}
+		t.Count = 1 // Auto-correct count to 1 since only one entry is provided in DEBE
+		currentDebe := Debe{}
+		currentDebe.DebeTopic = t
+		entryList := getEntries(s, t.Link)
+		currentDebe.DebeEntry = entryList[0]
+		debeList = append(debeList, currentDebe)
+	}
+
+	return debeList
+}
+
+func getEntries(s Scraper, eksiURL string) []Entry {
+
+	log.Println("URL to check: " + eksiURL)
 	resp, err := http.Get(eksiURL)
 	if err != nil {
 		panic(err)
@@ -140,35 +188,9 @@ func (s Scraper) getEntries(eksiURL string) []Entry {
 	return entryList
 }
 
-func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
+func getTopics(s Scraper, topicURL string) []Topic {
 
-	baseURL := "https://eksisozluk.com/basliklar/populer"
-
-	topicList := make([]Topic, 0)
-	startPage := parameter.PageNumber
-
-	for parameter.Limit > len(topicList) {
-		paginationURL := baseURL + "?p=" + strconv.Itoa(startPage)
-		additionalTopicList := s.getTopics(paginationURL)
-		if len(additionalTopicList) == 0 {
-			break
-		}
-		if len(topicList)+len(additionalTopicList) > parameter.Limit {
-			topicList = append(topicList, additionalTopicList[0:(parameter.Limit-len(topicList))]...)
-		} else {
-			topicList = append(topicList, additionalTopicList...)
-		}
-
-		startPage = startPage + 1
-	}
-
-	return topicList
-
-}
-
-func (s Scraper) getTopics(topicURL string) []Topic {
-
-	fmt.Println("Checking URL: " + topicURL)
+	log.Println("Checking URL: " + topicURL)
 	topicList := make([]Topic, 0)
 
 	resp, err := http.Get(topicURL)
@@ -205,24 +227,4 @@ func (s Scraper) getTopics(topicURL string) []Topic {
 	}
 
 	return topicList
-}
-
-func (s Scraper) GetDEBE(parameter Parameter) []Debe {
-
-	debeTopics := s.getTopics("https://eksisozluk.com/debe")
-
-	debeList := make([]Debe, 0)
-
-	for _, t := range debeTopics {
-		if len(debeList) >= parameter.Limit {
-			break
-		}
-		currentDebe := Debe{}
-		currentDebe.DebeTopic = t
-		entryList := s.getEntries(t.Link)
-		currentDebe.DebeEntry = entryList[0]
-		debeList = append(debeList, currentDebe)
-	}
-
-	return debeList
 }

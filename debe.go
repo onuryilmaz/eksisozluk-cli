@@ -21,7 +21,7 @@ func (c *DebeCommand) Run(args []string) int {
 		parameter.Limit = 100
 	}
 	debeList := scraper.GetDEBE(parameter)
-	WriteDebeList(debeList)
+	WriteDebeList(debeList, parameter)
 	return 0
 }
 

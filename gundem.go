@@ -21,7 +21,7 @@ func (c *GundemCommand) Run(args []string) int {
 	}
 
 	topicList := scraper.GetPopularTopics(parameter)
-	WriteTopicList(topicList)
+	WriteTopicList(topicList, parameter)
 	return 0
 }
 

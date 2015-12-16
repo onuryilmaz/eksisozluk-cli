@@ -10,25 +10,21 @@ go build
 
 Başlık ile arama:
 ```go
-eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI]
+eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
 
 Gündem Başlıkları:
 ```go
-eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI]
+eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI]  [--output=json|console]
 ```
 
 DEBE:
 ```go
-eksisozluk-cli debe [--limit=DEBE_LIMITI]
+eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
 
 ### TODO
 - [ ] Gündem: live; coloring for windows
-- [ ] JSON, CSV export
-- [ ] Logger
-- [ ] Travis multiple collobarator release
-
 
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.

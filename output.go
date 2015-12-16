@@ -2,13 +2,57 @@ package main
 
 import (
 	"fmt"
-	"sort"
-
+	"github.com/docker/docker/vendor/src/github.com/jfrazelle/go/canonical/json"
 	"github.com/fatih/color"
 	"github.com/mattn/go-colorable"
+	"io/ioutil"
+	"log"
+	"sort"
+	"strconv"
 )
 
-func WriteEntryList(entryList []Entry) {
+func WriteEntryList(entryList []Entry, parameter Parameter, baslik string) {
+
+	if parameter.Output == "console" {
+		writeEntryListConsole(entryList)
+	} else if parameter.Output == "json" {
+		writeJSON(entryList, parameter, "debe")
+	} else {
+		log.Println("No supported output!")
+	}
+}
+
+func fileNameHandler(baslik string, parameter Parameter) string {
+
+	fileName := baslik
+
+	fileName = fileName + "_limit_" + strconv.Itoa(parameter.Limit)
+
+	if parameter.PageNumber > 1 {
+		fileName = fileName + "_page_" + strconv.Itoa(parameter.PageNumber)
+	}
+	if parameter.Sukela {
+		fileName = fileName + "_sukela"
+	}
+
+	return fileName
+}
+
+func writeJSON(data interface{}, parameter Parameter, baslik string) {
+
+	j, jerr := json.MarshalIndent(data, "", "  ")
+	if jerr != nil {
+		fmt.Println("jerr:", jerr.Error())
+	}
+
+	fileName := fileNameHandler(baslik, parameter)
+
+	ioutil.WriteFile(fileName+".json", j, 0777)
+	log.Println("Writing to file: " + fileName + ".json")
+
+}
+
+func writeEntryListConsole(entryList []Entry) {
 
 	for _, e := range entryList {
 
@@ -19,7 +63,16 @@ func WriteEntryList(entryList []Entry) {
 	}
 }
 
-func WriteTopicList(topicList []Topic) {
+func WriteTopicList(topicList []Topic, parameter Parameter) {
+	if parameter.Output == "console" {
+		writeTopicListConsole(topicList)
+	} else if parameter.Output == "json" {
+		writeJSON(topicList, parameter, "gundem")
+	} else {
+		log.Println("No supported output!")
+	}
+}
+func writeTopicListConsole(topicList []Topic) {
 	sortedList := byCount(topicList)
 	sort.Sort(sortedList)
 
@@ -49,7 +102,17 @@ func WriteTopicList(topicList []Topic) {
 	}
 }
 
-func WriteDebeList(debeList []Debe) {
+func WriteDebeList(debeList []Debe, parameter Parameter) {
+
+	if parameter.Output == "console" {
+		writeDebeListConsole(debeList)
+	} else if parameter.Output == "json" {
+		writeJSON(debeList, parameter, "debe")
+	} else {
+		log.Println("No supported output!")
+	}
+}
+func writeDebeListConsole(debeList []Debe) {
 
 	for _, d := range debeList {
 

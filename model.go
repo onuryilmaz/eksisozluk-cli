@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"sort"
 
 	"github.com/mitchellh/cli"
@@ -29,6 +29,7 @@ type Parameter struct {
 	PageNumber int
 	Limit      int
 	Sukela     bool
+	Output     string
 }
 
 type byCount []Topic
@@ -71,13 +72,15 @@ func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter 
 	cmdFlags.Usage = func() { ui.Output(cli.Help()) }
 	var pageNumber, limit int
 	var sukelaMod bool
+	var output string
 	cmdFlags.IntVar(&pageNumber, "page", 1, "Sayfa numarasi")
 	cmdFlags.IntVar(&limit, "limit", -1, "Limit")
 	cmdFlags.BoolVar(&sukelaMod, "sukela", false, "Sukela mod")
+	cmdFlags.StringVar(&output, "output", "console", "Output mode")
 
 	if err := cmdFlags.Parse(args); err != nil {
-		fmt.Println("Error in parameter handling")
+		log.Println("Error in parameter handling")
 	}
-	return Parameter{pageNumber, limit, sukelaMod}
+	return Parameter{pageNumber, limit, sukelaMod, output}
 
 }
