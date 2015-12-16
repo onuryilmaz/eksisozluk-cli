@@ -65,7 +65,7 @@ func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter 
 	cmdFlags.Usage = func() { ui.Output(cli.Help()) }
 	var pageNumber, limit int
 	cmdFlags.IntVar(&pageNumber, "page", 1, "Sayfa numarasi")
-	cmdFlags.IntVar(&limit, "limit", 10, "Limit")
+	cmdFlags.IntVar(&limit, "limit", -1, "Limit")
 	if err := cmdFlags.Parse(args); err != nil {
 		fmt.Println("Error in parameter handling")
 	}

@@ -16,6 +16,9 @@ func (c *GundemCommand) Help() string {
 
 func (c *GundemCommand) Run(args []string) int {
 	parameter := ParameterFlagHandler(args, c.Ui, c)
+	if parameter.Limit == -1 {
+		parameter.Limit = 10
+	}
 
 	topicList := scraper.GetPopularTopics(parameter)
 	WriteTopicList(topicList)

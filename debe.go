@@ -16,7 +16,11 @@ func (c *DebeCommand) Help() string {
 
 func (c *DebeCommand) Run(args []string) int {
 
-	debeList := scraper.GetDEBE()
+	parameter := ParameterFlagHandler(args, c.Ui, c)
+	if parameter.Limit == -1 {
+		parameter.Limit = 100
+	}
+	debeList := scraper.GetDEBE(parameter)
 	WriteDebeList(debeList)
 	return 0
 }

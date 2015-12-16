@@ -202,13 +202,16 @@ func (s Scraper) getTopics(topicURL string) []Topic {
 	return topicList
 }
 
-func (s Scraper) GetDEBE() []Debe {
+func (s Scraper) GetDEBE(parameter Parameter) []Debe {
 
 	debeTopics := s.getTopics("https://eksisozluk.com/debe")
 
 	debeList := make([]Debe, 0)
 
 	for _, t := range debeTopics {
+		if len(debeList) >= parameter.Limit {
+			break
+		}
 		currentDebe := Debe{}
 		currentDebe.DebeTopic = t
 		entryList := s.getEntries(t.Link)

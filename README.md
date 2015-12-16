@@ -10,23 +10,22 @@ go build
 
 Başlık ile arama:
 ```go
-eksisozluk-cli baslik "golang" [--page=PAGE_NUMBER] [--limit=ENTRY_LIMIT]
+eksisozluk-cli baslik "golang" [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI]
 ```
 
 Gündem Başlıkları:
 ```go
-eksisozluk-cli gundem [--page=PAGE_NUMBER] [--limit=ENTRY_LIMIT]
+eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI]
 ```
 
 DEBE:
 ```go
-eksisozluk-cli debe
+eksisozluk-cli debe [--limit=DEBE_LIMITI]
 ```
 
 ### TODO
 - [ ] Gündem: live; coloring (Coloring: error when limit < 15)
 - [ ] Başlık: "şükela mod"
-- [ ] Debe: Limit
 - [ ] JSON, CSV export
 - [ ] Logger
 
