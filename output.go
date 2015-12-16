@@ -25,6 +25,10 @@ func WriteTopicList(topicList []Topic) {
 	// topics with count higher than mean will be printed in color
 	_, idx := sortedList.Mean()
 	groupSize := idx / (len(gundemColors) - 1)
+	if groupSize == 0 {
+		groupSize++
+	}
+
 	current := 0
 
 	for i, t := range topicList {

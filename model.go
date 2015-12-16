@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/mitchellh/cli"
 	"sort"
+
+	"github.com/mitchellh/cli"
 )
 
 type Entry struct {
@@ -45,10 +46,14 @@ func (a byCount) Less(i, j int) bool {
 
 // Mean assumes the list is already sorted.
 func (a byCount) Mean() (value int64, index int) {
+	n := len(a)
+	if n < 1 {
+		return
+	}
+
 	for _, t := range a {
 		value += t.Count
 	}
-	n := len(a)
 	value = value / int64(n)
 
 	// find the topic that is closest to mean value
@@ -57,7 +62,7 @@ func (a byCount) Mean() (value int64, index int) {
 		index = n - 1
 	}
 
-	return value, index
+	return
 }
 
 func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter Parameter) {
