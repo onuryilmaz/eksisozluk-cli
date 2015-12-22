@@ -33,7 +33,7 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 * Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.
 
 #### Derleme
-* Go 1.5 versiyonu ile aşağıdaki komutlar ile uygulamayı derleyebilirsiniz:
+* Go 1.5 ve üzeri bir versiyon ile aşağıdaki komutları kullanarak uygulamayı derleyebilirsiniz:
 ```
 go get github.com/tools/godep
 go get github.com/onuryilmaz/eksisozluk-cli
