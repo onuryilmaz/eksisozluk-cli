@@ -28,16 +28,26 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
 ![Ekşisözlük CLI - DEBE](http://i.imgur.com/0pqzU23.gif)
 
-### TODO
-- Gündem: live; coloring for windows
-- Documentation
- - Godoc
- - Github Pages
-
 ### Katkıda Bulunun
 * Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. 
 * Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.
 
+#### Derleme
+* Go 1.5 versiyonu ile aşağıdaki komutlar ile uygulamayı derleyebilirsiniz.
+* Dependency yönetimi:
+```
+go get github.com/tools/godep
+go get github.com/onuryilmaz/eksisozluk-cli
+cd $GOPATH/src/github.com/onuryilmaz/eksisozluk-cli
+godep restore
+go build
+```
+
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
 * Geliştirilen uygulama bilgisayarınızdan Ekşi Sözlük web sitesine bağlanarak bilgi alır. [Ekşi Sözlük Kullanım Koşulları](https://eksisozluk.com/eksi-sozluk-kullanim-kosullari--2602576)'na aykırı kullanımlarda sorumluluk bu uygulamayı kullanana aittir.
+
+### TODO
+- Documentation
+ - Godoc
+ - Github Pages
