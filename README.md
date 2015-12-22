@@ -2,12 +2,12 @@
 [![Go Report Card](http://goreportcard.com/badge/onuryilmaz/eksisozluk-cli)](http://goreportcard.com/report/onuryilmaz/eksisozluk-cli)
 
 ### Ekşisözlük CLI Nedir?
-* 
+* Ekşi Sözlük komut satırı arayüzü; metin analizi, veri madenciliği gibi işlemleriniz için veri toplanmasını otomatik olarak yapmanıza yardımcı olur. Ayrıca gündeme komut satırından bakarak "nerd" olma şansınız da var!
 
 ### Kullanım
 
 #### İndir:
-* İşletim sisteminize uygun paketi bağlantıdan indirebilirsiniz.
+* İşletim sisteminize uygun paketi [bağlantıdan](https://github.com/onuryilmaz/eksisozluk-cli/releases) indirebilirsiniz.
 * İndirdiğiniz dosyanın adını **eksisozluk-cli** olarak değiştirerek örnek komutları çalıştırabilirsiniz.
 
 #### Başlık ile Arama:
@@ -35,4 +35,4 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
-* [Ekşi Sözlük Kullanım Koşulları](https://eksisozluk.com/eksi-sozluk-kullanim-kosullari--2602576)
+* Geliştirilen uygulama bilgisayarınızdan Ekşi Sözlük web sitesine bağlanarak bilgi alır. [Ekşi Sözlük Kullanım Koşulları](https://eksisozluk.com/eksi-sozluk-kullanim-kosullari--2602576)'na aykırı kullanımlarda sorumluluk bu uygulamayı kullanana aittir.
