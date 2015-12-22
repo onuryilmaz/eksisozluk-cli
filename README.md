@@ -1,27 +1,30 @@
 [![Build Status](https://travis-ci.org/onuryilmaz/eksisozluk-cli.svg?branch=master)](https://travis-ci.org/onuryilmaz/eksisozluk-cli)
 [![Go Report Card](http://goreportcard.com/badge/onuryilmaz/eksisozluk-cli)](http://goreportcard.com/report/onuryilmaz/eksisozluk-cli)
 
-### Build
-```go
-go build
-```
+### Ekşisözlük CLI Nedir?
+* 
 
-### Run
+### Kullanım
 
-Başlık ile arama:
-```go
+#### İndir:
+* İşletim sisteminize uygun paketi bağlantıdan indirebilirsiniz.
+* İndirdiğiniz dosyanın adını **eksisozluk-cli** olarak değiştirerek örnek komutları çalıştırabilirsiniz.
+
+#### Başlık ile Arama:
+```shell
 eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
 
-Gündem Başlıkları:
-```go
-eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI]  [--output=json|console]
+#### Gündem Başlıkları:
+```shell
+eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=json|console]
 ```
 
-DEBE:
-```go
+#### DEBE:
+```shell
 eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
+
 
 ### TODO
 - Gündem: live; coloring for windows
