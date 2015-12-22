@@ -20,6 +20,7 @@ eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_L
 ```shell
 eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=json|console]
 ```
+![Ekşisözlük Gündem](http://im.ezgif.com/tmp/ezgif-3294122878.gif)
 
 ##### DEBE:
 ```shell
