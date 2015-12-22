@@ -6,21 +6,21 @@
 
 ### Kullanım
 
-#### İndir:
+##### İndir:
 * İşletim sisteminize uygun paketi [bağlantıdan](https://github.com/onuryilmaz/eksisozluk-cli/releases) indirebilirsiniz.
 * İndirdiğiniz dosyanın adını **eksisozluk-cli** olarak değiştirerek örnek komutları çalıştırabilirsiniz.
 
-#### Başlık ile Arama:
+##### Başlık ile Arama:
 ```shell
 eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
 
-#### Gündem Başlıkları:
+##### Gündem Başlıkları:
 ```shell
 eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=json|console]
 ```
 
-#### DEBE:
+##### DEBE:
 ```shell
 eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
@@ -32,6 +32,9 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
  - Readme with detailed usage & Animated GIFs
  - Godoc
  - Github Pages
+
+### Katkıda Bulunun
+* Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.
 
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
