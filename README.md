@@ -49,4 +49,5 @@ go build
 ### TODO
 - Documentation
  - Godoc
+ - Release
  - Github Pages
