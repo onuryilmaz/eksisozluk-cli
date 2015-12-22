@@ -34,7 +34,8 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
  - Github Pages
 
 ### Katkıda Bulunun
-* Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.
+* Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. 
+* Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.
 
 ### Bilgi
 * Ekşi Sözlük, [Ekşi Teknoloji](https://eksisozluk.com/eksi-teknoloji--1631416) şirketinin tescilli markasıdır.
