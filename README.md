@@ -14,6 +14,7 @@
 ```shell
 eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
+![Ekşisözlük CLI - Başlık ile Arama](http://i.imgur.com/iK3E1Af.gif)
 
 ##### Gündem Başlıkları:
 ```shell
