@@ -25,7 +25,7 @@ eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=js
 ```shell
 eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
-
+![Ekşisözlük CLI - DEBE](http://i.imgur.com/0pqzU23.gif)
 
 ### TODO
 - Gündem: live; coloring for windows
