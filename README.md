@@ -14,7 +14,7 @@
 ```shell
 eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
-![Ekşisözlük CLI - Başlık ile Arama](http://i.imgur.com/iK3E1Af.gif)
+![Ekşisözlük CLI - Başlık ile Arama](http://i.imgur.com/kpJxrhQ.gif)
 
 ##### Gündem Başlıkları:
 ```shell
@@ -30,8 +30,7 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 
 ### TODO
 - Gündem: live; coloring for windows
-- Documentation 
- - Readme with detailed usage & Animated GIFs
+- Documentation
  - Godoc
  - Github Pages
 
