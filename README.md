@@ -14,19 +14,19 @@
 ```shell
 eksisozluk-cli baslik "golang" [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
 ```
-![Ekşisözlük CLI - Başlık ile Arama](http://i.imgur.com/kpJxrhQ.gif)
+![Ekşisözlük CLI - Başlık ile Arama](https://github.com/onuryilmaz/eksisozluk-cli/raw/gh-pages/images/baslik.gif)
 
 ##### Gündem Başlıkları:
 ```shell
 eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=json|console]
 ```
-![Ekşisözlük Gündem](http://im.ezgif.com/tmp/ezgif-3294122878.gif)
+![Ekşisözlük Gündem](https://github.com/onuryilmaz/eksisozluk-cli/raw/gh-pages/images/gundem.gif)
 
 ##### DEBE:
 ```shell
 eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 ```
-![Ekşisözlük CLI - DEBE](http://i.imgur.com/0pqzU23.gif)
+![Ekşisözlük CLI - DEBE](https://github.com/onuryilmaz/eksisozluk-cli/raw/gh-pages/images/debe.gif)
 
 ### Katkıda Bulunun
 * Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. 
