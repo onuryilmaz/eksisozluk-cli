@@ -1,3 +1,4 @@
+//This is the main package for the "eksisozluk-cli" application
 package main
 
 import (
