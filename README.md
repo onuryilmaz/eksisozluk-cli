@@ -49,5 +49,6 @@ go build
 ### TODO
 - Documentation
  - Godoc
- - Release
+ - Releases
+ - Unit Tests
  - Github Pages
