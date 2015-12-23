@@ -27,7 +27,7 @@ func (c *BaslikCommand) Run(args []string) int {
 	if parameter.Limit == -1 {
 		parameter.Limit = 10
 	}
-	entryList := scraper.GetEntries(baslik, parameter)
+	entryList := GetEntries(baslik, parameter)
 
 	WriteEntryList(entryList, parameter, baslik)
 

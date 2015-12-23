@@ -11,52 +11,42 @@ import (
 	"strings"
 )
 
-var scraper Scraper
-
-type Scraper struct {
-	entryMatcher     func(n *html.Node) bool
-	authorMatcher    func(n *html.Node) bool
-	dateMatcher      func(n *html.Node) bool
-	entryListMatcher func(n *html.Node) bool
-	topicListMatcher func(n *html.Node) bool
-	indexListMatcher func(n *html.Node) bool
-	contentMatcher   func(n *html.Node) bool
-}
+var entryMatcher func(n *html.Node) bool
+var authorMatcher func(n *html.Node) bool
+var dateMatcher func(n *html.Node) bool
+var entryListMatcher func(n *html.Node) bool
+var topicListMatcher func(n *html.Node) bool
+var contentMatcher func(n *html.Node) bool
 
 func init() {
 
-	entryListMatcher := func(n *html.Node) bool {
+	entryListMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "id"), "entry-list")
 	}
 
-	entryMatcher := func(n *html.Node) bool {
+	entryMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "class"), "content")
 	}
 
-	authorMatcher := func(n *html.Node) bool {
+	authorMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "class"), "entry-author")
 	}
 
-	dateMatcher := func(n *html.Node) bool {
+	dateMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "class"), "entry-date")
 	}
 
-	topicListMatcher := func(n *html.Node) bool {
+	topicListMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "class"), "topic-list")
 	}
 
-	indexListMatcher := func(n *html.Node) bool {
-		return strings.Contains(scrape.Attr(n, "id"), "index-section")
-	}
-
-	contentMatcher := func(n *html.Node) bool {
+	contentMatcher = func(n *html.Node) bool {
 		return strings.Contains(scrape.Attr(n, "id"), "content-body")
 	}
 
-	scraper = Scraper{entryMatcher, authorMatcher, dateMatcher, entryListMatcher, topicListMatcher, indexListMatcher, contentMatcher}
 }
 
-func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
+func GetEntries(text string, parameter Parameter) []Entry {
 
 	baseURL := "https://eksisozluk.com/?q=" + url.QueryEscape(text)
 
@@ -78,7 +68,7 @@ func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 			paginationURL = paginationURL + "&a=nice"
 		}
 
-		additionalEntryList := getEntries(s, paginationURL)
+		additionalEntryList := getEntries(paginationURL)
 		if len(additionalEntryList) == 0 {
 			break
 		}
@@ -94,7 +84,7 @@ func (s Scraper) GetEntries(text string, parameter Parameter) []Entry {
 	return entryList
 }
 
-func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
+func GetPopularTopics(parameter Parameter) []Topic {
 
 	baseURL := "https://eksisozluk.com/basliklar/populer"
 
@@ -103,7 +93,7 @@ func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
 
 	for parameter.Limit > len(topicList) {
 		paginationURL := baseURL + "?p=" + strconv.Itoa(startPage)
-		additionalTopicList := getTopics(s, paginationURL)
+		additionalTopicList := getTopics(paginationURL)
 		if len(additionalTopicList) == 0 {
 			break
 		}
@@ -120,9 +110,9 @@ func (s Scraper) GetPopularTopics(parameter Parameter) []Topic {
 
 }
 
-func (s Scraper) GetDEBE(parameter Parameter) []Debe {
+func GetDEBE(parameter Parameter) []Debe {
 
-	debeTopics := getTopics(s, "https://eksisozluk.com/debe")
+	debeTopics := getTopics("https://eksisozluk.com/debe")
 
 	debeList := make([]Debe, 0)
 
@@ -133,7 +123,7 @@ func (s Scraper) GetDEBE(parameter Parameter) []Debe {
 		t.Count = 1 // Auto-correct count to 1 since only one entry is provided in DEBE
 		currentDebe := Debe{}
 		currentDebe.DebeTopic = t
-		entryList := getEntries(s, t.Link)
+		entryList := getEntries(t.Link)
 		currentDebe.DebeEntry = entryList[0]
 		debeList = append(debeList, currentDebe)
 	}
@@ -141,7 +131,7 @@ func (s Scraper) GetDEBE(parameter Parameter) []Debe {
 	return debeList
 }
 
-func getEntries(s Scraper, eksiURL string) []Entry {
+func getEntries(eksiURL string) []Entry {
 
 	log.Println("URL to check: " + eksiURL)
 	resp, err := http.Get(eksiURL)
@@ -155,20 +145,20 @@ func getEntries(s Scraper, eksiURL string) []Entry {
 
 	entryList := make([]Entry, 0)
 
-	entryListNode, found := scrape.Find(root, s.entryListMatcher)
+	entryListNode, found := scrape.Find(root, entryListMatcher)
 
 	if found == false {
 		return entryList
 	}
 
-	scrapedEntries := scrape.FindAll(entryListNode, s.entryMatcher)
+	scrapedEntries := scrape.FindAll(entryListNode, entryMatcher)
 
 	if len(scrapedEntries) == 0 {
 		return entryList
 	}
 	for _, scrappedEntry := range scrapedEntries {
-		authorNode, authorCheck := scrape.Find(scrappedEntry.Parent, s.authorMatcher)
-		dateNode, dateCheck := scrape.Find(scrappedEntry.Parent, s.dateMatcher)
+		authorNode, authorCheck := scrape.Find(scrappedEntry.Parent, authorMatcher)
+		dateNode, dateCheck := scrape.Find(scrappedEntry.Parent, dateMatcher)
 
 		entry := Entry{}
 		entry.Text = scrape.Text(scrappedEntry)
@@ -188,7 +178,7 @@ func getEntries(s Scraper, eksiURL string) []Entry {
 	return entryList
 }
 
-func getTopics(s Scraper, topicURL string) []Topic {
+func getTopics(topicURL string) []Topic {
 
 	log.Println("Checking URL: " + topicURL)
 	topicList := make([]Topic, 0)
@@ -202,9 +192,9 @@ func getTopics(s Scraper, topicURL string) []Topic {
 		panic(err)
 	}
 
-	contentNode, _ := scrape.Find(root, s.contentMatcher)
+	contentNode, _ := scrape.Find(root, contentMatcher)
 
-	topicListNode, _ := scrape.Find(contentNode, s.topicListMatcher)
+	topicListNode, _ := scrape.Find(contentNode, topicListMatcher)
 
 	topicLists := scrape.FindAll(topicListNode, scrape.ByTag(atom.Li))
 	for _, topicNode := range topicLists {

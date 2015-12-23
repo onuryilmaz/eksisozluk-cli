@@ -20,7 +20,7 @@ func (c *GundemCommand) Run(args []string) int {
 		parameter.Limit = 10
 	}
 
-	topicList := scraper.GetPopularTopics(parameter)
+	topicList := GetPopularTopics(parameter)
 	WriteTopicList(topicList, parameter)
 	return 0
 }
