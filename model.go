@@ -8,27 +8,33 @@ import (
 	"github.com/mitchellh/cli"
 )
 
+// EksiSozlukCLICommand type holds necessary fields for command
 type EksiSozlukCLICommand struct {
 	UI cli.Ui
 }
 
+// Entry defines fields for a single entry
 type Entry struct {
 	Text   string
 	Author string
 	Date   string
-	Id     string
+	ID string
 }
 
+// Topic defines fields for a topic
 type Topic struct {
 	Title string
 	Count int64
 	Link  string
 }
 
+// Debe is a composition of a topic and an entry
 type Debe struct {
 	DebeTopic Topic
 	DebeEntry Entry
 }
+
+// Parameter holds command line parameter resolutions
 type Parameter struct {
 	PageNumber int
 	Limit      int
@@ -71,7 +77,7 @@ func (a byCount) Mean() (value int64, index int) {
 	return
 }
 
-func ParameterFlagHandler(args []string, eksiCLI interface{}, c EksiSozlukCLICommand) (parameter Parameter, err error) {
+func parameterFlagHandler(args []string, eksiCLI interface{}, c EksiSozlukCLICommand) (parameter Parameter, err error) {
 	cmdFlags := flag.NewFlagSet("parameter", flag.ContinueOnError)
 	var pageNumber, limit int
 	var sukelaMod bool

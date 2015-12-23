@@ -46,6 +46,7 @@ func init() {
 
 }
 
+// GetEntries gets string for topic with parameters and returns a list of entries
 func GetEntries(text string, parameter Parameter) []Entry {
 
 	baseURL := "https://eksisozluk.com/?q=" + url.QueryEscape(text)
@@ -84,6 +85,8 @@ func GetEntries(text string, parameter Parameter) []Entry {
 	return entryList
 }
 
+
+// GetPopularTopics gets parameters and returns a list of topics
 func GetPopularTopics(parameter Parameter) []Topic {
 
 	baseURL := "https://eksisozluk.com/basliklar/populer"
@@ -110,6 +113,7 @@ func GetPopularTopics(parameter Parameter) []Topic {
 
 }
 
+// GetDEBE gets parameters and returns a list of Debe
 func GetDEBE(parameter Parameter) []Debe {
 
 	debeTopics := getTopics("https://eksisozluk.com/debe")
@@ -169,7 +173,7 @@ func getEntries(eksiURL string) []Entry {
 		if dateCheck {
 			idDate := scrape.Text(dateNode)
 			splitted := strings.SplitAfterN(idDate, " ", 2)
-			entry.Id = strings.TrimSpace(splitted[0])
+			entry.ID = strings.TrimSpace(splitted[0])
 			entry.Date = strings.TrimSpace(splitted[1])
 		}
 		entryList = append(entryList, entry)

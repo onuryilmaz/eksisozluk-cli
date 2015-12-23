@@ -4,10 +4,12 @@ import (
 	"strings"
 )
 
+// GundemCommand for gathering topics ("gundem")
 type GundemCommand struct {
 	cli EksiSozlukCLICommand
 }
 
+// Help provides the usage guide
 func (c *GundemCommand) Help() string {
 	helpText := `
 				Kullanım: eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=json|console]
@@ -20,8 +22,9 @@ func (c *GundemCommand) Help() string {
 	return strings.TrimSpace(helpText)
 }
 
+// Run handles the main operations of command
 func (c *GundemCommand) Run(args []string) int {
-	parameter, err := ParameterFlagHandler(args, c, c.cli)
+	parameter, err := parameterFlagHandler(args, c, c.cli)
 	if err != nil {
 		return 1
 	}
@@ -34,6 +37,7 @@ func (c *GundemCommand) Run(args []string) int {
 	return 0
 }
 
+// Synopsis provides the usage
 func (c *GundemCommand) Synopsis() string {
 	return "Gündem başlıklarını listeleme"
 }

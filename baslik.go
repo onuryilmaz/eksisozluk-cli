@@ -4,10 +4,12 @@ import (
 	"strings"
 )
 
+// BaslikCommand for gathering entries based on a "baslik" (topic)
 type BaslikCommand struct {
 	cli EksiSozlukCLICommand
 }
 
+// Help provides the usage guide
 func (c *BaslikCommand) Help() string {
 	helpText := `
 				Kullanım: eksisozluk-cli baslik BASLIK [--sukela] [--page=SAYFA_SAYISI] [--limit=ENTRY_LIMITI] [--output=json|console]
@@ -21,6 +23,7 @@ func (c *BaslikCommand) Help() string {
 	return strings.TrimSpace(helpText)
 }
 
+// Run handles the main operations of command
 func (c *BaslikCommand) Run(args []string) int {
 
 	if len(args) < 1 {
@@ -29,7 +32,7 @@ func (c *BaslikCommand) Run(args []string) int {
 	}
 	baslik := args[0]
 
-	parameter, err := ParameterFlagHandler(args[1:], c, c.cli)
+	parameter, err := parameterFlagHandler(args[1:], c, c.cli)
 
 	if err != nil {
 		return 1
@@ -43,7 +46,7 @@ func (c *BaslikCommand) Run(args []string) int {
 
 	return 0
 }
-
+// Synopsis provides the usage
 func (c *BaslikCommand) Synopsis() string {
 	return "Başlık adı ile arama"
 }

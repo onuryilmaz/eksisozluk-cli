@@ -6,6 +6,7 @@ import (
 	"github.com/mitchellh/cli"
 )
 
+// commands holds the command implementations
 var commands map[string]cli.CommandFactory
 
 func init() {

@@ -11,12 +11,46 @@ import (
 	"strconv"
 )
 
+var gundemColors = []string{
+	"\033[38;5;196m",
+	"\033[38;5;202m",
+	"\033[38;5;208m",
+	"\033[38;5;214m",
+	"\033[38;5;220m",
+}
+
+var colorEnd = "\033[0m"
+
+// WriteEntryList handles writing entries based on parameters
 func WriteEntryList(entryList []Entry, parameter Parameter, baslik string) {
 
 	if parameter.Output == "console" {
 		writeEntryListConsole(entryList)
 	} else if parameter.Output == "json" {
 		writeJSON(entryList, parameter, "debe")
+	} else {
+		log.Println("No supported output!")
+	}
+}
+
+// WriteDebeList handles writing "Debe"s based on parameters
+func WriteDebeList(debeList []Debe, parameter Parameter) {
+
+	if parameter.Output == "console" {
+		writeDebeListConsole(debeList)
+	} else if parameter.Output == "json" {
+		writeJSON(debeList, parameter, "debe")
+	} else {
+		log.Println("No supported output!")
+	}
+}
+
+// WriteTopicList handles writing topics based on parameters
+func WriteTopicList(topicList []Topic, parameter Parameter) {
+	if parameter.Output == "console" {
+		writeTopicListConsole(topicList)
+	} else if parameter.Output == "json" {
+		writeJSON(topicList, parameter, "gundem")
 	} else {
 		log.Println("No supported output!")
 	}
@@ -57,21 +91,13 @@ func writeEntryListConsole(entryList []Entry) {
 	for _, e := range entryList {
 
 		d := color.New(color.FgCyan, color.Bold)
-		d.Printf("[%s, %s, %s] ", e.Author, e.Date, e.Id)
+		d.Printf("[%s, %s, %s] ", e.Author, e.Date, e.ID)
 
 		fmt.Println(e.Text)
 	}
 }
 
-func WriteTopicList(topicList []Topic, parameter Parameter) {
-	if parameter.Output == "console" {
-		writeTopicListConsole(topicList)
-	} else if parameter.Output == "json" {
-		writeJSON(topicList, parameter, "gundem")
-	} else {
-		log.Println("No supported output!")
-	}
-}
+
 func writeTopicListConsole(topicList []Topic) {
 	sortedList := byCount(topicList)
 	sort.Sort(sortedList)
@@ -102,16 +128,7 @@ func writeTopicListConsole(topicList []Topic) {
 	}
 }
 
-func WriteDebeList(debeList []Debe, parameter Parameter) {
 
-	if parameter.Output == "console" {
-		writeDebeListConsole(debeList)
-	} else if parameter.Output == "json" {
-		writeJSON(debeList, parameter, "debe")
-	} else {
-		log.Println("No supported output!")
-	}
-}
 func writeDebeListConsole(debeList []Debe) {
 
 	for _, d := range debeList {
@@ -120,18 +137,9 @@ func writeDebeListConsole(debeList []Debe) {
 		red.Printf("%s:\n", d.DebeTopic.Title)
 
 		cyan := color.New(color.FgCyan, color.Bold)
-		cyan.Printf("[%s, %s, %s] ", d.DebeEntry.Author, d.DebeEntry.Date, d.DebeEntry.Id)
+		cyan.Printf("[%s, %s, %s] ", d.DebeEntry.Author, d.DebeEntry.Date, d.DebeEntry.ID)
 
 		fmt.Println(d.DebeEntry.Text)
 	}
 }
 
-var gundemColors = []string{
-	"\033[38;5;196m",
-	"\033[38;5;202m",
-	"\033[38;5;208m",
-	"\033[38;5;214m",
-	"\033[38;5;220m",
-}
-
-var colorEnd = "\033[0m"

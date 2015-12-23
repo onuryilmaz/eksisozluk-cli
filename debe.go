@@ -4,10 +4,12 @@ import (
 	"strings"
 )
 
+// DebeCommand for gathering the best entries of yesterday ("debe"))
 type DebeCommand struct {
 	cli EksiSozlukCLICommand
 }
 
+// Help provides the usage guide
 func (c *DebeCommand) Help() string {
 	helpText := `
 				Kullanım: eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
@@ -19,8 +21,9 @@ func (c *DebeCommand) Help() string {
 	return strings.TrimSpace(helpText)
 }
 
+// Run handles the main operations of command
 func (c *DebeCommand) Run(args []string) int {
-	parameter, err := ParameterFlagHandler(args, c, c.cli)
+	parameter, err := parameterFlagHandler(args, c, c.cli)
 	if err != nil {
 		return 1
 	}
@@ -33,6 +36,7 @@ func (c *DebeCommand) Run(args []string) int {
 	return 0
 }
 
+// Synopsis provides the usage
 func (c *DebeCommand) Synopsis() string {
 	return "Dünün En Beğenilen Entry'lerini listeleme"
 }
