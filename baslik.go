@@ -46,6 +46,7 @@ func (c *BaslikCommand) Run(args []string) int {
 
 	return 0
 }
+
 // Synopsis provides the usage
 func (c *BaslikCommand) Synopsis() string {
 	return "Başlık adı ile arama"

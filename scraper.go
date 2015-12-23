@@ -85,7 +85,6 @@ func GetEntries(text string, parameter Parameter) []Entry {
 	return entryList
 }
 
-
 // GetPopularTopics gets parameters and returns a list of topics
 func GetPopularTopics(parameter Parameter) []Topic {
 

@@ -97,7 +97,6 @@ func writeEntryListConsole(entryList []Entry) {
 	}
 }
 
-
 func writeTopicListConsole(topicList []Topic) {
 	sortedList := byCount(topicList)
 	sort.Sort(sortedList)
@@ -128,7 +127,6 @@ func writeTopicListConsole(topicList []Topic) {
 	}
 }
 
-
 func writeDebeListConsole(debeList []Debe) {
 
 	for _, d := range debeList {
@@ -142,4 +140,3 @@ func writeDebeListConsole(debeList []Debe) {
 		fmt.Println(d.DebeEntry.Text)
 	}
 }
-

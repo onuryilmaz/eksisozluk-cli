@@ -18,7 +18,7 @@ type Entry struct {
 	Text   string
 	Author string
 	Date   string
-	ID string
+	ID     string
 }
 
 // Topic defines fields for a topic
