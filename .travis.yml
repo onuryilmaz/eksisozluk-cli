@@ -8,6 +8,7 @@ before_install:
   - go get github.com/tcnksm/ghr
   - go get github.com/tools/godep
   - go get github.com/onuryilmaz/eksisozluk-cli
+  - go get ./...
   - godep restore
 after_success:
   - gox -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
