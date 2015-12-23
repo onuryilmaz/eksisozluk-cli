@@ -15,19 +15,19 @@ func init() {
 
 		"baslik": func() (cli.Command, error) {
 			return &BaslikCommand{
-				Ui: ui,
+				cli: EksiSozlukCLICommand{ui},
 			}, nil
 		},
 
 		"gundem": func() (cli.Command, error) {
 			return &GundemCommand{
-				Ui: ui,
+				cli: EksiSozlukCLICommand{ui},
 			}, nil
 		},
 
 		"debe": func() (cli.Command, error) {
 			return &DebeCommand{
-				Ui: ui,
+				cli: EksiSozlukCLICommand{ui},
 			}, nil
 		},
 	}

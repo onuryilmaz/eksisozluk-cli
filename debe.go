@@ -1,22 +1,30 @@
 package main
 
 import (
-	"github.com/mitchellh/cli"
 	"strings"
 )
 
 type DebeCommand struct {
-	Ui cli.Ui
+	cli EksiSozlukCLICommand
 }
 
 func (c *DebeCommand) Help() string {
-	helpText := "Usage: ...."
+	helpText := `
+				Kullanım: eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
+				  Başlık için bulunan entry'leri listelemek için kullanılır.
+				Seçenekler:
+				  --limit=ENTRY_LIMITI			Toplam listelenen entry limiti (varsayılan 100)
+				  --output=json,console	console: 	Komut satırı çıktısı, json: JSON dosyası çıktısı (varsayılan console)
+				`
 	return strings.TrimSpace(helpText)
 }
 
 func (c *DebeCommand) Run(args []string) int {
+	parameter, err := ParameterFlagHandler(args, c, c.cli)
+	if err != nil {
+		return 1
+	}
 
-	parameter := ParameterFlagHandler(args, c.Ui, c)
 	if parameter.Limit == -1 {
 		parameter.Limit = 100
 	}
@@ -26,5 +34,5 @@ func (c *DebeCommand) Run(args []string) int {
 }
 
 func (c *DebeCommand) Synopsis() string {
-	return "debe sonuçları"
+	return "Dünün En Beğenilen Entry'lerini listeleme"
 }

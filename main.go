@@ -5,6 +5,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"os"
+	"strconv"
 )
 
 func init() {
@@ -19,7 +20,7 @@ func init() {
 
 func main() {
 
-	c := cli.NewCLI("eksisozluk-cli", "1.0.0")
+	c := cli.NewCLI("eksisozluk-cli", Version)
 	c.Args = os.Args[1:]
 	c.Commands = commands
 	log.Println("Starting CLI!")
@@ -28,7 +29,7 @@ func main() {
 		log.Println(err)
 	}
 
-	log.Println("Closing CLI..")
+	log.Println("Closing CLI with status: " + strconv.Itoa(exitStatus))
 
 	os.Exit(exitStatus)
 }

@@ -1,12 +1,16 @@
 package main
 
 import (
+	"errors"
 	"flag"
-	"log"
 	"sort"
 
 	"github.com/mitchellh/cli"
 )
+
+type EksiSozlukCLICommand struct {
+	UI cli.Ui
+}
 
 type Entry struct {
 	Text   string
@@ -67,9 +71,8 @@ func (a byCount) Mean() (value int64, index int) {
 	return
 }
 
-func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter Parameter) {
+func ParameterFlagHandler(args []string, eksiCLI interface{}, c EksiSozlukCLICommand) (parameter Parameter, err error) {
 	cmdFlags := flag.NewFlagSet("parameter", flag.ContinueOnError)
-	cmdFlags.Usage = func() { ui.Output(cli.Help()) }
 	var pageNumber, limit int
 	var sukelaMod bool
 	var output string
@@ -77,10 +80,11 @@ func ParameterFlagHandler(args []string, ui cli.Ui, cli cli.Command) (parameter 
 	cmdFlags.IntVar(&limit, "limit", -1, "Limit")
 	cmdFlags.BoolVar(&sukelaMod, "sukela", false, "Sukela mod")
 	cmdFlags.StringVar(&output, "output", "console", "Output mode")
+	cmdFlags.Usage = func() { c.UI.Output(eksiCLI.(cli.Command).Help()) }
 
 	if err := cmdFlags.Parse(args); err != nil {
-		log.Println("Error in parameter handling")
+		return parameter, errors.New("Error in parameter handling")
 	}
-	return Parameter{pageNumber, limit, sukelaMod, output}
+	return Parameter{pageNumber, limit, sukelaMod, output}, nil
 
 }
