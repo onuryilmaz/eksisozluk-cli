@@ -27,7 +27,7 @@ func WriteEntryList(entryList []Entry, parameter Parameter, baslik string) {
 	if parameter.Output == "console" {
 		writeEntryListConsole(entryList)
 	} else if parameter.Output == "json" {
-		writeJSON(entryList, parameter, "debe")
+		writeJSON(entryList, parameter, baslik)
 	} else {
 		log.Println("No supported output!")
 	}
