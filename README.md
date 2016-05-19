@@ -35,11 +35,9 @@ eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
 #### Derleme
 * Go 1.5 ve üzeri bir versiyon ile aşağıdaki komutları kullanarak uygulamayı derleyebilirsiniz:
 ```
-go get github.com/tools/godep
 go get github.com/onuryilmaz/eksisozluk-cli
 cd $GOPATH/src/github.com/onuryilmaz/eksisozluk-cli
-godep restore
-go build
+go install
 ```
 
 ### Bilgi
