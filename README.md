@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/onuryilmaz/eksisozluk-cli.svg?branch=master)](https://travis-ci.org/onuryilmaz/eksisozluk-cli)
-[![Go Report Card](http://goreportcard.com/badge/onuryilmaz/eksisozluk-cli)](http://goreportcard.com/report/onuryilmaz/eksisozluk-cli) ![License Mozilla v2](http://b.repl.ca/v1/License-Mozilla_v2-red.png) [![GoDoc](https://godoc.org/github.com/onuryilmaz/eksisozluk-cli?status.svg)](https://godoc.org/github.com/onuryilmaz/eksisozluk-cli)
+[![Go Report Card](https://goreportcard.com/badge/onuryilmaz/eksisozluk-cli)](https://goreportcard.com/report/onuryilmaz/eksisozluk-cli) ![License Mozilla v2](http://b.repl.ca/v1/License-Mozilla_v2-red.png) [![GoDoc](https://godoc.org/github.com/onuryilmaz/eksisozluk-cli?status.svg)](https://godoc.org/github.com/onuryilmaz/eksisozluk-cli)
 
 ### Ekşisözlük CLI Nedir?
 * Ekşi Sözlük komut satırı arayüzü; metin analizi, veri madenciliği gibi işlemleriniz için veri toplanmasını otomatik olarak yapmanıza yardımcı olur. Ayrıca gündeme komut satırından bakarak "nerd" olma şansınız da var!
