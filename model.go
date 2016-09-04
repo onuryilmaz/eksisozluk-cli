@@ -40,6 +40,7 @@ type Parameter struct {
 	Limit      int
 	Sukela     bool
 	Output     string
+	OutputDir  string
 }
 
 type byCount []Topic
@@ -82,15 +83,17 @@ func parameterFlagHandler(args []string, eksiCLI interface{}, c EksiSozlukCLICom
 	var pageNumber, limit int
 	var sukelaMod bool
 	var output string
+	var outputDir string
 	cmdFlags.IntVar(&pageNumber, "page", 1, "Sayfa numarasi")
 	cmdFlags.IntVar(&limit, "limit", -1, "Limit")
 	cmdFlags.BoolVar(&sukelaMod, "sukela", false, "Sukela mod")
 	cmdFlags.StringVar(&output, "output", "console", "Output mode")
+	cmdFlags.StringVar(&outputDir, "outputDir", ".", "Output file")
 	cmdFlags.Usage = func() { c.UI.Output(eksiCLI.(cli.Command).Help()) }
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return parameter, errors.New("Error in parameter handling")
 	}
-	return Parameter{pageNumber, limit, sukelaMod, output}, nil
+	return Parameter{pageNumber, limit, sukelaMod, output, outputDir}, nil
 
 }

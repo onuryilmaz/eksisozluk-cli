@@ -81,7 +81,7 @@ func writeJSON(data interface{}, parameter Parameter, baslik string) {
 
 	fileName := fileNameHandler(baslik, parameter)
 
-	ioutil.WriteFile(fileName+".json", j, 0777)
+	ioutil.WriteFile(parameter.OutputDir+ "/" +fileName+".json", j, 0777)
 	log.Println("Writing to file: " + fileName + ".json")
 
 }
