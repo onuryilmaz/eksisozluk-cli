@@ -63,8 +63,8 @@ func GetEntries(text string, parameter Parameter) []Entry {
 
 	for parameter.Limit > len(entryList) {
 
-		// with similar title (by Turkish charackters for example) eksisozluk redirects page 
-		// to a url already containts some query parameters -> ?nr=true&rf=...
+		// with similar title (by Turkish characters for example) eksisozluk redirects page 
+		// to a valid url already containts some query parameters -> ?nr=true&rf=...
 		paginationURL := redirectedURL
 		if strings.Contains(redirectedURL, "?") {
 			paginationURL += "&p=" + strconv.Itoa(startPage)
