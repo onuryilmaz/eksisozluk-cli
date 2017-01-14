@@ -34,18 +34,6 @@ func WriteEntryList(entryList []Entry, parameter Parameter, baslik string) {
 	}
 }
 
-// WriteDebeList handles writing "Debe"s based on parameters
-func WriteDebeList(debeList []Debe, parameter Parameter) {
-
-	if parameter.Output == "console" {
-		writeDebeListConsole(debeList)
-	} else if parameter.Output == "json" {
-		writeJSON(debeList, parameter, "debe")
-	} else {
-		log.Println("No supported output!")
-	}
-}
-
 // WriteTopicList handles writing topics based on parameters
 func WriteTopicList(topicList []Topic, parameter Parameter) {
 	if parameter.Output == "console" {
@@ -125,19 +113,5 @@ func writeTopicListConsole(topicList []Topic) {
 		}
 
 		fmt.Fprintf(writer, "%s%s [%d]%s\n", prefix, t.Title, t.Count, suffix)
-	}
-}
-
-func writeDebeListConsole(debeList []Debe) {
-
-	for _, d := range debeList {
-
-		red := color.New(color.FgRed, color.Bold)
-		red.Printf("%s:\n", d.DebeTopic.Title)
-
-		cyan := color.New(color.FgCyan, color.Bold)
-		cyan.Printf("[%s, %s, %s] ", d.DebeEntry.Author, d.DebeEntry.Date, d.DebeEntry.ID)
-
-		fmt.Println(d.DebeEntry.Text)
 	}
 }

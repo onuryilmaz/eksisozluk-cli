@@ -22,12 +22,6 @@ eksisozluk-cli gundem [--page=SAYFA_SAYISI] [--limit=BASLIK_LIMITI] [--output=js
 ```
 ![Ekşisözlük Gündem](https://github.com/onuryilmaz/eksisozluk-cli/raw/gh-pages/images/gundem.gif)
 
-##### DEBE:
-```shell
-eksisozluk-cli debe [--limit=DEBE_LIMITI] [--output=json|console]
-```
-![Ekşisözlük CLI - DEBE](https://github.com/onuryilmaz/eksisozluk-cli/raw/gh-pages/images/debe.gif)
-
 ### Katkıda Bulunun
 * Ekşi Sözlük CLI [Go](https://golang.org/) dili ile açık kaynak kodlu olarak yazıldı. 
 * Eklenmesini istediğiniz bir özellik ya da bulduğunuz bir hata olursa [issue açarak](https://github.com/onuryilmaz/eksisozluk-cli/issues) bildirebilirsiniz.

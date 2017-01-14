@@ -25,11 +25,5 @@ func init() {
 				cli: EksiSozlukCLICommand{ui},
 			}, nil
 		},
-
-		"debe": func() (cli.Command, error) {
-			return &DebeCommand{
-				cli: EksiSozlukCLICommand{ui},
-			}, nil
-		},
 	}
 }

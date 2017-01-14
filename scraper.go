@@ -119,28 +119,6 @@ func GetPopularTopics(parameter Parameter) []Topic {
 
 }
 
-// GetDEBE gets parameters and returns a list of Debe
-func GetDEBE(parameter Parameter) []Debe {
-
-	debeTopics := getTopics("https://eksisozluk.com/debe")
-
-	debeList := make([]Debe, 0)
-
-	for _, t := range debeTopics {
-		if len(debeList) >= parameter.Limit {
-			break
-		}
-		t.Count = 1 // Auto-correct count to 1 since only one entry is provided in DEBE
-		currentDebe := Debe{}
-		currentDebe.DebeTopic = t
-		entryList := getEntries(t.Link)
-		currentDebe.DebeEntry = entryList[0]
-		debeList = append(debeList, currentDebe)
-	}
-
-	return debeList
-}
-
 func getEntries(eksiURL string) []Entry {
 
 	log.Println("URL to check: " + eksiURL)

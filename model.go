@@ -28,12 +28,6 @@ type Topic struct {
 	Link  string
 }
 
-// Debe is a composition of a topic and an entry
-type Debe struct {
-	DebeTopic Topic
-	DebeEntry Entry
-}
-
 // Parameter holds command line parameter resolutions
 type Parameter struct {
 	PageNumber int
