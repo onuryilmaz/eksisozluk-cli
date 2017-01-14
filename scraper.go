@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/yhat/scrape"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"fmt"
+	"github.com/yhat/scrape"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 var entryMatcher func(n *html.Node) bool
@@ -57,13 +59,13 @@ func GetEntries(text string, parameter Parameter) []Entry {
 	}
 
 	redirectedURL := resp.Request.URL.String()
-
+	fmt.Println(redirectedURL)
 	entryList := make([]Entry, 0)
 	startPage := parameter.PageNumber
 
 	for parameter.Limit > len(entryList) {
 
-		// with similar title (by Turkish characters for example) eksisozluk redirects page 
+		// with similar title (by Turkish characters for example) eksisozluk redirects page
 		// to a valid url already containts some query parameters -> ?nr=true&rf=...
 		paginationURL := redirectedURL
 		if strings.Contains(redirectedURL, "?") {
@@ -95,7 +97,7 @@ func GetEntries(text string, parameter Parameter) []Entry {
 // GetPopularTopics gets parameters and returns a list of topics
 func GetPopularTopics(parameter Parameter) []Topic {
 
-	baseURL := "https://eksisozluk.com/basliklar/populer"
+	baseURL := "https://eksisozluk.com/basliklar/gundem"
 
 	topicList := make([]Topic, 0)
 	startPage := parameter.PageNumber
@@ -156,9 +158,17 @@ func getEntries(eksiURL string) []Entry {
 		}
 		if dateCheck {
 			idDate := scrape.Text(dateNode)
+			fmt.Println(idDate)
 			splitted := strings.SplitAfterN(idDate, " ", 2)
-			entry.ID = strings.TrimSpace(splitted[0])
-			entry.Date = strings.TrimSpace(splitted[1])
+			if len(splitted) > 1 {
+				entry.ID = strings.TrimSpace(splitted[0])
+				entry.Date = strings.TrimSpace(splitted[1])
+			} else {
+				// No time info is found (it can happen on old entries)
+				entry.ID = strings.TrimSpace("00:00")
+				entry.Date = strings.TrimSpace(splitted[0])
+			}
+
 		}
 		entryList = append(entryList, entry)
 	}
@@ -180,11 +190,15 @@ func getTopics(topicURL string) []Topic {
 		panic(err)
 	}
 
-	contentNode, _ := scrape.Find(root, contentMatcher)
-
-	topicListNode, _ := scrape.Find(contentNode, topicListMatcher)
-
-	topicLists := scrape.FindAll(topicListNode, scrape.ByTag(atom.Li))
+	contentNode, ok := scrape.Find(root, contentMatcher)
+	if !ok {
+		panic("Not found any content!")
+	}
+	topicListNode := scrape.FindAll(contentNode, topicListMatcher)
+	if !ok {
+		panic("Not found any topic list!")
+	}
+	topicLists := scrape.FindAll(topicListNode[1], scrape.ByTag(atom.Li))
 	for _, topicNode := range topicLists {
 
 		topic := Topic{}

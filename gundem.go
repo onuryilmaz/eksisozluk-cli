@@ -17,7 +17,7 @@ func (c *GundemCommand) Help() string {
 				Seçenekler:
 				  --page=SAYFA_SAYISI			Başlıklar için başlangıç sayfası (varsayılan 1)
 				  --limit=BAŞLIK_LIMITI			Toplam listelenen entry limiti (varsayılan 10)
-				  --output=json,console	console: 	Komut satırı çıktısı, json: JSON dosyası çıktısı (varsayılan console)
+				  --output=json,console			console: Komut satırı çıktısı, json: JSON dosyası çıktısı (varsayılan console)
 				`
 	return strings.TrimSpace(helpText)
 }
