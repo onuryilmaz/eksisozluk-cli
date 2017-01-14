@@ -9,4 +9,4 @@ before_install:
   - go get ./...
 after_success:
   - gox -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
-  - ghr --username onuryilmaz --token $GITHUB_TOKEN --replace 0.0.2 dist/
+  - ghr --username onuryilmaz --token $GITHUB_TOKEN --replace $VERSION dist/
