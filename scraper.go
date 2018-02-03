@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"fmt"
 	"github.com/yhat/scrape"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -59,7 +58,6 @@ func GetEntries(text string, parameter Parameter) []Entry {
 	}
 
 	redirectedURL := resp.Request.URL.String()
-	fmt.Println(redirectedURL)
 	entryList := make([]Entry, 0)
 	startPage := parameter.PageNumber
 
@@ -68,10 +66,13 @@ func GetEntries(text string, parameter Parameter) []Entry {
 		// with similar title (by Turkish characters for example) eksisozluk redirects page
 		// to a valid url already containts some query parameters -> ?nr=true&rf=...
 		paginationURL := redirectedURL
-		if strings.Contains(redirectedURL, "?") {
-			paginationURL += "&p=" + strconv.Itoa(startPage)
-		} else {
-			paginationURL += "?p=" + strconv.Itoa(startPage)
+
+		if startPage != 0 {
+			if strings.Contains(redirectedURL, "?") {
+				paginationURL += "&p=" + strconv.Itoa(startPage)
+			} else {
+				paginationURL += "?p=" + strconv.Itoa(startPage)
+			}
 		}
 
 		if parameter.Sukela {
@@ -103,7 +104,10 @@ func GetPopularTopics(parameter Parameter) []Topic {
 	startPage := parameter.PageNumber
 
 	for parameter.Limit > len(topicList) {
-		paginationURL := baseURL + "?p=" + strconv.Itoa(startPage)
+		paginationURL := baseURL
+		if startPage != 0 {
+			paginationURL = baseURL + "?p=" + strconv.Itoa(startPage)
+		}
 		additionalTopicList := getTopics(paginationURL)
 		if len(additionalTopicList) == 0 {
 			break
@@ -158,7 +162,6 @@ func getEntries(eksiURL string) []Entry {
 		}
 		if dateCheck {
 			idDate := scrape.Text(dateNode)
-			fmt.Println(idDate)
 			splitted := strings.SplitAfterN(idDate, " ", 2)
 			if len(splitted) > 1 {
 				entry.ID = strings.TrimSpace(splitted[0])
