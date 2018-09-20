@@ -22,7 +22,7 @@ var contentMatcher func(n *html.Node) bool
 func init() {
 
 	entryListMatcher = func(n *html.Node) bool {
-		return strings.Contains(scrape.Attr(n, "id"), "entry-list")
+		return strings.Contains(scrape.Attr(n, "id"), "entry-item-list")
 	}
 
 	entryMatcher = func(n *html.Node) bool {
